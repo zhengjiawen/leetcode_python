@@ -40,6 +40,44 @@ class Solution:
 
         return head
 
+    def reverseBetween2(self, head: ListNode, left: int, right: int) -> ListNode:
+        '''
+        用迭代的方式
+        :param head:
+        :param left:
+        :param right:
+        :return:
+        '''
+        if not head or not head.next:
+            return head
+
+        counter = 1
+        pre, cur = None, head
+        while counter < left:
+            counter+=1
+            pre = cur
+            cur = cur.next
+        # cur指向第left个节点，也是反转后的最后一个节点
+        last = cur
+        # 反转前的一个节点
+        pre_last = pre
+        while counter <= right and cur:
+            counter+=1
+            nex = cur.next
+            cur.next = pre
+            pre = cur
+            cur = nex
+
+        # last 接反转后的那个节点
+        last.next = cur
+
+        if left == 1:
+            # 这里的pre是反转的头节点
+            return pre
+        else:
+            pre_last.next = pre
+            return head
+
 
 
 def init_list():
@@ -67,7 +105,7 @@ if __name__ == '__main__':
     root = init_list()
 
     # traverse(root)
-    result_root = solution.reverseBetween(root, 2,4)
+    result_root = solution.reverseBetween2(root, 2,4)
     traverse(result_root)
 
 
