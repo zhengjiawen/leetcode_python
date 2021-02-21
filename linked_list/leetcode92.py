@@ -78,7 +78,48 @@ class Solution:
             pre_last.next = pre
             return head
 
+    def reverseBetween3(self, head: ListNode, left: int, right: int) -> ListNode:
+        '''
+        用迭代的方式
+        :param head:
+        :param left:
+        :param right:
+        :return:
+        '''
+        def reverseN(head, N=2):
+            '''
+            反转前N个节点，迭代
+            :param head:
+            :param N:
+            :return:
+            '''
+            counter = 0
+            pre, cur = None, head
+            rev_last = cur
+            while counter < N:
+                counter+=1
+                nex = cur.next
+                cur.next = pre
+                pre = cur
+                cur = nex
+            rev_last.next = cur
+            return pre
 
+        if not head or not head.next:
+            return head
+
+        pre, cur = None, head
+        counter = 1
+        while counter<left:
+            pre = cur
+            cur = cur.next
+            counter+=1
+
+        if left == 1:
+            return reverseN(cur, right-left+1)
+
+        pre.next = reverseN(cur, right-left+1)
+        return head
 
 def init_list():
     node1 = ListNode(1)
@@ -105,7 +146,7 @@ if __name__ == '__main__':
     root = init_list()
 
     # traverse(root)
-    result_root = solution.reverseBetween2(root, 2,4)
+    result_root = solution.reverseBetween3(root, 2,4)
     traverse(result_root)
 
 
