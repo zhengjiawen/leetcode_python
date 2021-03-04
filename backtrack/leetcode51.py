@@ -14,9 +14,22 @@ from typing import List
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
         board = ['.'*n for _ in range(n)]
+        self.ret = []
 
-        def back_track(board, row, col):
-            pass
+        def back_track(board, row, n):
+            if row == len(board):
+                self.ret.append(board.copy())
+                return
+
+            for i in range(n):
+                if self.is_valid(board, row, i):
+                    board[row] = board[row][:i]+ 'Q' + board[row][i+1:]
+                    back_track(board, row+1, n)
+                    board[row] = board[row][:i]+ '.' + board[row][i+1:]
+
+        back_track(board, 0, n)
+
+        return self.ret
 
 
 
@@ -29,7 +42,7 @@ class Solution:
         # 检查右上方
         i = row
         j = col
-        while i>0 and j<len(board[0]):
+        while i>0 and j<len(board[0])-1:
             i-=1
             j+=1
             if board[i][j] == 'Q':
