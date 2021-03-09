@@ -63,6 +63,8 @@ class Solution:
 
 
 if __name__ == '__main__':
-    n = 4
+    n = 8
     solution = Solution()
-    print(solution.solveNQueens(4))
+    ret = solution.solveNQueens(n)
+    print(len(ret))
+    print(ret)
